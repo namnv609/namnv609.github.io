@@ -1,0 +1,29 @@
+<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+  <div class="sidebar">
+    <div class="widget">
+      <h2 class="widget-title">Editor's Choice</h2>
+      <div class="blog-list-widget">
+        <div class="list-group">
+          {% assign editor_choice_posts = site.posts | where: "is_editor_choice", true %}
+          {% if editor_choice_posts.size > 0 %}
+            {% for editor_choice_post in editor_choice_posts | limit: 5 %}
+              <a href="{{ editor_choice_post.url }}"
+                class="list-group-item list-group-item-action flex-column align-items-start"
+                title="{{ editor_choice_post.title }}">
+                <div class="w-100 justify-content-between">
+                  <img src="{{ editor_choice_post.thumbnail | relative_url }}" alt="" class="img-fluid float-left">
+                  <h5 class="mb-1">{{ editor_choice_post.title | truncate: 20 }}</h5>
+                  <small>
+                    {{ editor_choice_post.date | date: "%d/%m/%Y %H:%M %p" }}
+                  </small>
+                </div>
+              </a>
+            {% endfor %}
+          {% else %}
+            Chưa có bài viết nào :(!
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{{ page.title }} | {{ site.name }}</title>
+    <meta name="keywords" content="namnv609,blog,developer,programming,coder,notes">
+    <meta name="description" content="NamNV609's Blog">
+    <meta name="author" content="NamNV609">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+    <link href="{{ '/assets/css/bootstrap.css' | relative_url }}" rel="stylesheet">
+    <link href="{{ '/assets/css/font-awesome.min.css' | relative_url }}" rel="stylesheet">
+    <link href="{{ '/assets/css/style.css' | relative_url }}" rel="stylesheet">
+    <link href="{{ '/assets/css/responsive.css' | relative_url }}" rel="stylesheet">
+    <link href="{{ '/assets/css/colors.css' | relative_url }}" rel="stylesheet">
+    <link href="{{ '/assets/css/tech.css' | relative_url }}" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div id="wrapper">
+      {% include header.html %}
+      <section class="section">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+              <div class="page-wrapper">
+                {{ content }}
+              </div>
+            </div>
+            {% include right_sidebar.html %}
+          </div>
+        </div>
+      </section>
+      {% include footer.html %}
+      <div class="dmtop">Scroll to Top</div>
+    </div>
+    <script src="{{ '/assets/js/jquery.min.js' | relative_url }}"></script>
+    <script src="{{ '/assets/js/tether.min.js' | relative_url }}"></script>
+    <script src="{{ '/assets/js/bootstrap.min.js' | relative_url }}"></script>
+    <script src="{{ '/assets/js/custom.js' | relative_url }}"></script>
+  </body>
+</html>

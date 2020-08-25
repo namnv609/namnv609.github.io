@@ -1,0 +1,30 @@
+name: NamNV609's Blog
+description: NamNV609's Blog
+baseurl: ""
+url: ""
+
+plugins:
+  - jekyll-feed
+  - jekyll-paginate
+
+paginate: 15
+paginate_path: /page-:num/
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      author: NamNV609
+      title: Untitled
+      layout: post
+      thumbnail: /assets/images/no-thumbnail.png
+
+feed:
+  excerpt_only: true
+
+collections:
+  posts:
+    label: Posts
+    output: true
+    permalink: /posts/:slug:output_ext

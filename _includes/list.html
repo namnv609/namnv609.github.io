@@ -1,0 +1,30 @@
+<div class="blog-list clearfix">
+  {% if posts_list.size > 0 %}
+    {% for post in posts_list %}
+      <div class="blog-box row">
+        <div class="col-md-4">
+          <div class="post-media">
+            <a href="{{ post.url }}" title="{{ post.title }}">
+              <img src="{{ post.thumbnail | relative_url }}" alt="{{ post.title }}" class="img-fluid">
+              <div class="hovereffect"></div>
+            </a>
+          </div>
+        </div>
+        <div class="blog-meta big-meta col-md-8">
+          <h4>
+            <a href="{{ post.url }}" title="">
+              {{ post.title }}
+            </a>
+          </h4>
+          <p>
+            {{ post.excerpt }}
+          </p>
+          {% include post_meta.html %}
+        </div>
+      </div>
+      <hr class="invis" />
+    {% endfor %}
+  {% else %}
+    <h4>Chưa có bài viết nào :(!</h4>
+  {% endif %}
+</div>

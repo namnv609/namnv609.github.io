@@ -1,0 +1,31 @@
+---
+layout: base
+---
+
+<div class="blog-title-area text-center">
+  <ol class="breadcrumb hidden-xs-down">
+    <li class="breadcrumb-item">
+      <a href="{{ site.url }}">Trang Chủ</a>
+    </li>
+    <li class="breadcrumb-item active">{{ page.title }}</li>
+  </ol>
+  <h3>{{ page.title }}</h3>
+  <div class="blog-meta big-meta">
+    {% assign post = page %}
+    {% include post_meta.html %}
+  </div>
+  {% include post_share.html %}
+</div>
+{% if post.feature_image %}
+  <div class="single-post-media">
+    <img src="{{ post.feature_img | relative_url }}" alt="{{ post.title }}" class="img-fluid">
+  </div>
+{% endif %}
+<div class="blog-content">
+  <div class="pp">
+    {{ content }}
+  </div>
+</div>
+<div class="blog-title-area">
+  {% include post_share.html %}
+</div>

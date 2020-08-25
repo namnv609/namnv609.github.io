@@ -1,0 +1,22 @@
+<div class="post-sharing">
+  <ul class="list-inline">
+    <li>
+      <a href="https://www.facebook.com/sharer/sharer.php?u={{ post.url | absolute_url }}" class="fb-button btn btn-primary">
+        <i class="fa fa-facebook"></i>
+        <span class="down-mobile">Share on Facebook</span>
+      </a>
+    </li>
+    <li>
+      <a href="https://twitter.com/home?status={{ post.url | absolute_url }}" class="tw-button btn btn-primary">
+        <i class="fa fa-twitter"></i>
+        <span class="down-mobile">Tweet on Twitter</span>
+      </a>
+    </li>
+    <li>
+      <a href="https://www.linkedin.com/shareArticle?mini=true&title=&summary=&source=&url={{ post.url | absolute_url }}" class="tw-button btn btn-primary">
+        <i class="fa fa-linkedin"></i>
+        <span class="down-mobile">Share on LinkedIn</span>
+      </a>
+    </li>
+  </ul>
+</div>

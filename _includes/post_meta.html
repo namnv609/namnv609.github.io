@@ -1,0 +1,12 @@
+{% if post.is_editor_choice %}
+  <small class="firstsmall">
+    <span class="bg-orange">Editor's Choice</span>
+  </small>
+{% endif %}
+
+<small>
+  {{ post.date | date: "%d-%m-%Y %H:%M %p" }}
+</small>
+<small>
+  {{ post.author }}
+</small>

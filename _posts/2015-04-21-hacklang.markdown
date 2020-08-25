@@ -1,0 +1,208 @@
+---
+date: 2020-04-21 07:31:00 +0700
+title: HackLang
+---
+
+**Hack** là ngôn ngữ lập trình cho [HipHop Virtual Machine (HHVM)](http://hhvm.com), được tạo bởi [Facebook](https://facebook.com), nó có thể tương thích hoàn toàn với [PHP](http://php.net).
+
+Hack là ngôn ngữ mã nguồn mở, được cấp phép theo giấy phép **BSD License**.
+Hack cho phép các lập trình viên sử dụng kiểu tĩnh (static type) và kiểu động của PHP (dynamic type). Việc này sẽ rất có lợi trong quá trình debug và test các ứng dụng lớn. Và nếu bạn là một lập trình viên dùng ngôn ngữ OOP truyền thống (như C#, Java), thì Hack sẽ khiến bạn có cảm giác như đang ở nhà.
+
+Hack cho phép chúng ta định nghĩa kiểu của dữ liệu trong các trường hợp như: tham số truyền vào của function, kiểu dữ liệu trả về của function (giống với ActionScript) và các thuộc tính của class, tuy nhiên, các biến local lại không thể khai báo kiểu của biến.
+
+```PHP
+<?hh
+
+function negate(bool $x): bool {
+    return !$x;
+}
+```
+
+Cấu trúc cơ bản của một file Hack tương tự như PHP nhưng có 1 vài thay đổi nhỏ như Hack thì bắt đầu với <?hh, còn PHP thì là <?php.
+
+```PHP
+<?hh
+echo 'Hello world';
+```
+
+Và một điều đặc biệt không giống với PHP mà bạn cần phải lưu ý, Hack không cho phép kết hợp HTML trong file như đoạn code PHP dưới đây:
+
+```PHP
+<html lang="vi-VN">
+    <head>
+        <title>PHP Test</title>
+    </head>
+    <body>
+        <?php echo 'Hello world'; ?>
+    </body>
+</html>
+```
+
+Thay vào đó, bạn có thể sử dụng [XHP](https://github.com/facebook/xhp-lib) (hay một template engine nào đó).
+
+Để dễ dàng hơn trong việc tìm hiểu nó, chúng ta sẽ thử chuyển đổi một source PHP nào đó sang Hack nhé. Mình xin phép sử dụng bộ source [Bias Random](https://github.com/wataridori/bias-random) của [ThắngTD](http://viblo.asia/u/thangtd90). Let's go!
+
+Đầu tiên, chúng ta sẽ tạo 1 file với tên *BiasRandom.hh*. Mở file đó ra với editor bất kỳ (Notepad++, SublimeText, ...) và bắt đầu với cấu trúc cơ bản của Hack:
+
+```PHP
+<?hh // strict
+```
+
+Tiếp theo, chúng ta tạo **namespace** và **class** như bình thường trong PHP
+
+```PHP
+namespace wataridori\BiasRandom;
+
+class BiasRandom
+{
+
+}
+```
+
+Vẫn chưa có gì khác biệt ngoài kiểu mở đầu file. OK, giờ mới bắt đầu, chúng ta khai báo property ```$data``` cho class BiasRandom. Property này là một array (key và value), với key là số nguyên (int) hoặc chuỗi (string) và giá trị là số, nên ta sẽ khai báo như sau:
+
+```PHP
+public array<mixed, int> $data = [];
+```
+
+Khác rồi đúng không ạ :D? Trong Hack, kiểu dữ liệu **mixed** sẽ cho phép bạn sử dụng bất kỳ kiểu dữ liệu nào (giống với việc khai báo ```var varName``` trong các ngôn ngữ OOP truyền thống). Tiếp theo, chúng ta sẽ khai báo constructor với param mảng dữ liệu mặc định là mảng rỗng và hàm này không trả về giá trị nào nên nó sẽ là ```void```:
+
+```PHP
+public function __construct(array<mixed, int> $data = []): void
+{
+    $this->data = $data;
+}
+```
+
+Đến hàm thêm phần tử cho property ```$data```, hàm này nhận hai tham số là ```$name``` (key của mảng), do chúng ta đã khai báo property ```$data``` có key là kiểu ```mixed``` (để nhận giá trị string hoặc int) nên kiểu dữ liệu của ```$name``` sẽ là mixed, tham số ```$weight``` (là giá trị của mảng), chúng ta khai báo kiểu int nên ```$weight``` cũng sẽ là int nhé. Và hàm này trả về một giá trị boolean
+
+```PHP
+public function addElement(mixed $name, int $weight): bool
+{
+    if (is_string($name) || is_numeric($name)) {
+        $this->data[$name] = $weight;
+
+        return true;
+    }
+
+    return false;
+}
+```
+
+Bạn có nhận thấy hàm này khác một chút so với source của ThắngTD không ạ? Có, khác ở chỗ chúng ta không cần phải kiểm tra kiểu dữ liệu của ```$weight``` nữa vì chúng ta đã khai báo kiểu của nó ở phần tham số của hàm rồi. Nếu người dùng truyền vào kiểu string, thì khi biên dịch sẽ có lỗi:
+
+```Catchable fatal error: Argument 2 passed to wataridori\BiasRandom\BiasRandom::addElement() must be an instance of int, string given in /path/to/file/BiasRandom.hh on line 23```
+
+Bây giờ đến hàm xóa phần tử trong property ```$data```, với tham số là key cần xóa của mảng và hàm này không trả giá trị:
+```PHP
+
+public function removeElement(mixed $name): void
+{
+    unset($this->data[$name]);
+}
+
+```
+Đến hàm set giá trị cho property ```$data```, hàm này nhận tham số là 1 mảng dữ liệu và không trả về giá trị:
+```PHP
+
+public function setData(array<mixed, int> $data): void
+{
+    $this->data = $data;
+}
+
+```
+Tiếp theo, đến hàm lấy giá trị hiện tại của property ```$data```, hàm này không nhận tham số nào, nhưng có trả về mảng dữ liệu của property data:
+```PHP
+
+public function getData(): array<mixed, int>
+{
+    return $this->data;
+}
+
+```
+Đến hàm random data với mảng dữ liệu mà bạn truyền vào, hàm này nhận mảng dữ liệu và trả về giá trị kiểu int hoặc string:
+```PHP
+
+public function getRandom(array<mixed, int> $data): mixed
+{
+    $total = 0;
+    $distribution = [];
+
+    foreach ($data as $name => $weight) {
+        $total += $weight;
+        $distribution[$name] = $total;
+    }
+
+    $rand = mt_rand(0, $total - 1);
+
+    foreach ($distribution as $name => $weight) {
+        if ($rand < $weight) {
+            return $name;
+        }
+    }
+}
+
+```
+Và cuối cùng là hàm random data với tham số là số nguyên và giá trị trả về là mảng dữ liệu:
+```PHP
+
+public function random(int $count = 1): array<mixed, int>
+{
+    $data = $this->data;
+    $result = [];
+
+    for ($i = 0; $i < $count; $i++) {
+        if (!$data) {
+            break;
+        }
+
+        $name = $this->getRandom($data);
+        $result[] = $name;
+        unset($data[$name]);
+    }
+
+    return $result;
+}
+
+```
+
+Bây giờ chúng ta sẽ tạo một file test đơn gỉan xem những gì ta viết có chạy được không nhé. Tạo một file với tên ```TestBiasRandom.hh``` và mở nó với một editor bất kỳ và code:
+```PHP
+
+<?hh // strict
+
+require_once 'BiasRandom.hh';
+
+$biasRandom = new wataridori\BiasRandom\BiasRandom();
+
+$data = [
+    'HipHop Virtual Machine' => 10
+];
+
+$biasRandom->setData($data);
+$biasRandom->addElement('HipHop', 20);
+$biasRandom->addElement('Virtual', 30);
+$biasRandom->addElement('Machine', 40);
+$biasRandom->addElement('Framgia', 50);
+$biasRandom->addElement('Viblo', 5);
+
+print_r($biasRandom->random());
+
+```
+
+Sau đó chúng ta CD tới thư mục chứa file test và chạy lệnh sau để xem kết quả:
+```hhvm TestBiasRandom.hh```
+
+Bây giờ chúng ta thử truyền sai kiểu dữ liệu cho hàm addElement xem có lỗi gì không nhé :D
+
+```
+$biasRandom->addElement('Hiphop, '20');
+```
+
+Chạy lại ```hhvm TestBiasRandom.hh``` để xem kết quả nào :))!
+
+Trên đây là những gì mình đã tìm hiểu được. Có gì sai sót, mọi người comment góp ý để mình sửa nhé :D! Mình sẽ tiếp tục tìm hiểu Hack và chia sẻ cùng với mọi người trong những bài tiếp theo.
+
+**Source code:**
+
+[https://github.com/namnv609/bias-random-hack-lang](https://github.com/namnv609/bias-random-hack-lang)

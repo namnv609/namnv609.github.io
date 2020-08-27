@@ -3,7 +3,7 @@ date: 2015-04-21 07:31:00 +0700
 title: HackLang
 ---
 
-**Hack** là ngôn ngữ lập trình cho [HipHop Virtual Machine (HHVM)](http://hhvm.com), được tạo bởi [Facebook](https://facebook.com), nó có thể tương thích hoàn toàn với [PHP](http://php.net).
+**Hack** là ngôn ngữ lập trình cho [HipHop Virtual Machine (HHVM)](http://hhvm.com), được tạo bởi [Facebook](https://facebook.com), nó có thể tương thích hoàn toàn với [PHP](http://php.net).<!--more-->
 
 Hack là ngôn ngữ mã nguồn mở, được cấp phép theo giấy phép **BSD License**.
 Hack cho phép các lập trình viên sử dụng kiểu tĩnh (static type) và kiểu động của PHP (dynamic type). Việc này sẽ rất có lợi trong quá trình debug và test các ứng dụng lớn. Và nếu bạn là một lập trình viên dùng ngôn ngữ OOP truyền thống (như C#, Java), thì Hack sẽ khiến bạn có cảm giác như đang ở nhà.

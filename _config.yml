@@ -9,6 +9,7 @@ plugins:
 
 paginate: 15
 paginate_path: /page-:num/
+excerpt_separator: <!--more-->
 
 defaults:
   - scope:

@@ -1,7 +1,7 @@
 name: NamNV609's Blog
 description: NamNV609's Blog
-baseurl: ""
-url: ""
+baseurl: "/"
+url: "https://namnv609.cf"
 
 plugins:
   - jekyll-feed

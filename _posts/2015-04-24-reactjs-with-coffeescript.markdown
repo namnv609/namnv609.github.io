@@ -3,7 +3,7 @@ date: 2015-04-24 09:47:00 +0700
 title: React.JS with CoffeeScript
 ---
 
-Như bài giới thiệu về [CoffeeScript](https://viblo.asia/NguyenThiHue/posts/57rVRq84v4bP) của @NguyenThiHue chúng ta biết được nhưng lợi ích của việc viết mã JavaScript bằng CoffeeScript. Và gần đây, React.JS (một JavaScript library mới, do Facebook phát triển) đang ngày càng được sử dụng rộng rãi thì việc viết code React.JS bằng CoffeeScript là một việc đương nhiên mà chúng ta sẽ nghĩ tới. Nhưng khi viết code React.JS, chúng ta luôn phải sử dụng cả JSX (JS + XML) thì lại có vấn đề xảy ra.
+Như bài giới thiệu về [CoffeeScript](https://viblo.asia/NguyenThiHue/posts/57rVRq84v4bP) của @NguyenThiHue chúng ta biết được nhưng lợi ích của việc viết mã JavaScript bằng CoffeeScript.<!--more--> Và gần đây, React.JS (một JavaScript library mới, do Facebook phát triển) đang ngày càng được sử dụng rộng rãi thì việc viết code React.JS bằng CoffeeScript là một việc đương nhiên mà chúng ta sẽ nghĩ tới. Nhưng khi viết code React.JS, chúng ta luôn phải sử dụng cả JSX (JS + XML) thì lại có vấn đề xảy ra.
 
 ```JavaScript
 HelloWorld = React.createClass
@@ -207,7 +207,7 @@ React.renderComponent `<Test />`, document.body
 
 ```
 
-Vậy là OK rồi. Chắc chỉ còn mỗi việc khi sử dụng __`__ ở ```render``` chúng ta không thể sử dụng ```@``` thay cho ```this``` và cộng chuỗi ```alert "Result is: #{varName}"``` theo kiểu của CoffeeScript được. Nhưng vấn đề đó không là gì so với những gì CoffeeScript mang lại, đúng không ạ :D?
+Vậy là OK rồi. Chắc chỉ còn mỗi việc khi sử dụng __\`__ ở ```render``` chúng ta không thể sử dụng ```@``` thay cho ```this``` và cộng chuỗi ```alert "Result is: #{varName}"``` theo kiểu của CoffeeScript được. Nhưng vấn đề đó không là gì so với những gì CoffeeScript mang lại, đúng không ạ :D?
 
 Demo 2:
 

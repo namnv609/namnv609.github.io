@@ -25,7 +25,7 @@ Còn nhiều loại bảo vệ nữa, nhưng do giới hạn của kiến thức
 
 * Keygen (Key generator): Là một chương trình nhỏ tạo ra số serial để đăng cho phần mềm. Được viết bởi các cracker sau khi đã tìm ra cách tính toán số serial của phần mềm đó.
 * Path: Là một chương trình tác động vào phần mềm nguồn (sửa chữa cấu trúc, mã nguồn) nhằm đăng ký mà không cần phải đi qua bước nhập số serial
-* REG File: Là một file với phần mở rộng là ``.reg`` (registry). Khi chạy file này, nó sẽ thêm vào Registry của Windows các thông tin cần thiết để đăng ký phần mềm.
+* REG File: Là một file với phần mở rộng là `.reg` (registry). Khi chạy file này, nó sẽ thêm vào Registry của Windows các thông tin cần thiết để đăng ký phần mềm.
 * Loader: Là một dạng chương trình chạy trước chương trình cần đăng ký mỗi khi sử dụng nó. Nó sẽ biến chương trình thành đã được đăng kí, và mỗi lần sử dụng bắt buộc lại phải chạy loader trước.
 * Key Maker: Là chương trình tạo ra file đăng ký của riêng từng chương trình (dạng .key chẳng hạn). Và điển hình của loại này là thằng WinRAR :D!
 * Cracked .exe file: Là file thực thi của phần mềm đã bị bẻ khóa sẵn, ta phải ghi đè nó lên file .exe gốc của phần mềm để sử dụng.

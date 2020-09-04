@@ -5,7 +5,7 @@ title: React.JS with CoffeeScript
 
 Như bài giới thiệu về [CoffeeScript](https://viblo.asia/NguyenThiHue/posts/57rVRq84v4bP) của @NguyenThiHue chúng ta biết được nhưng lợi ích của việc viết mã JavaScript bằng CoffeeScript.<!--more--> Và gần đây, React.JS (một JavaScript library mới, do Facebook phát triển) đang ngày càng được sử dụng rộng rãi thì việc viết code React.JS bằng CoffeeScript là một việc đương nhiên mà chúng ta sẽ nghĩ tới. Nhưng khi viết code React.JS, chúng ta luôn phải sử dụng cả JSX (JS + XML) thì lại có vấn đề xảy ra.
 
-```JavaScript
+```coffeescript
 HelloWorld = React.createClass
     render: ->
         (
@@ -15,13 +15,12 @@ HelloWorld = React.createClass
 
 Đơn giản như đoạn code trên đây, khi biên dịch chúng ta sẽ nhận được thông báo từ trình biên dịch CoffeeScript như sau:
 
-```Error: Parse error on line 4: Unexpected 'COMPARE'```
+`Error: Parse error on line 4: Unexpected 'COMPARE'`
 
-Waaath? Chẳng lẽ chúng ta từ bỏ việc kết hợp giữa CoffeeScript với React.JS (JSX) hay sao :(? Lên trang chủ của [CoffeeScript](http://coffeescript.org) xem nó có hỗ trợ ký tự escape không. Oh, may quá, nó có hỗ trợ với ký tự __`__ để báo cho trình biên dịch bỏ qua phần này! OK, bắt đầu thử viết xem nào.
+Waaath? Chẳng lẽ chúng ta từ bỏ việc kết hợp giữa CoffeeScript với React.JS (JSX) hay sao :(? Lên trang chủ của [CoffeeScript](http://coffeescript.org) xem nó có hỗ trợ ký tự escape không. Oh, may quá, nó có hỗ trợ với ký tự __\`__ để báo cho trình biên dịch bỏ qua phần này! OK, bắt đầu thử viết xem nào.
 Mình sẽ viết thử đoạn filter bảng dữ liệu nhé:
 
-```JavaScript
-
+```coffeescript
 ### * @jsx React.DOM###
 
 simpleData = [
@@ -95,13 +94,11 @@ Search = React.createClass
         )`
 
 React.renderComponent `<Search />`, document.body
-
 ```
 
 Hehe, kiểu viết thân thuộc (với mình) đây rồi. Nhưng với việc sử dụng CoffeeScript không hoàn toàn ổn với JSX. Ví dụ ta có đọa JS sau:
 
-```JavaScript
-
+```coffeescript
 $.ajax({
     type: 'POST',
     url: '',
@@ -114,12 +111,10 @@ $.ajax({
         console.log(err);
     }
 });
-
 ```
 
 Khi viết bằng CoffeeScript sẽ là:
-```JavaScript
-
+```coffeescript
 $.ajax
     type: 'POST'
     url: ''
@@ -129,13 +124,11 @@ $.ajax
     .bind @
     error: (xhr, ao, err) ->
         console.log err
-
 ```
 
-Chúng ta sẽ nhận được lỗi ```Error: Parse error on line 6: Unexpected '.'``` khi biên dịch :(. Mình vẫn chưa tìm được giải pháp tối ưu ngoài việc tạo một bản sao của biến ```this``` trước khi vào callback function:
+Chúng ta sẽ nhận được lỗi `Error: Parse error on line 6: Unexpected '.'` khi biên dịch :(. Mình vẫn chưa tìm được giải pháp tối ưu ngoài việc tạo một bản sao của biến `this` trước khi vào callback function:
 
-```JavaScript
-
+```coffeescript
 _this = @
 $.ajax
     type: 'POST'
@@ -145,7 +138,6 @@ $.ajax
             var: response
     error: (xhr, ao, err) ->
         console.log err
-
 ```
 
 Mọi người có cách giải quyết hay thì chia sẻ nhé :D!
@@ -157,16 +149,13 @@ Source code và demo:
 # -Update
 
 Sau khi ngồi ngâm lại code JS được biên dịch ra từ CoffeeScript, mình để ý thấy:
-```JavaScript
-
+```javascript
 (function() {
 
 }).call(this);
-
 ```
-Và mình đã hiểu cách truyền ```this``` vào callback mà không cần phải tạo bản sao của ```this``` trước khi vào callback. Vậy, đoạn JS AJAX ở trên sẽ thành như sau:
-```JavaScript
-
+Và mình đã hiểu cách truyền `this` vào callback mà không cần phải tạo bản sao của `this` trước khi vào callback. Vậy, đoạn JS AJAX ở trên sẽ thành như sau:
+```coffeescript
 $.ajax
     type: 'POST'
     url: ''
@@ -176,11 +165,9 @@ $.ajax
 ).bind(@))
 .fail (xhr, ao, err) ->
     console.log err
-
 ```
 Và một ví dụ khác:
-```JavaScript
-
+```coffeescript
 ### * @jsx React.DOM ###
 
 Test = React.createClass
@@ -204,10 +191,9 @@ Test = React.createClass
         )`
 
 React.renderComponent `<Test />`, document.body
-
 ```
 
-Vậy là OK rồi. Chắc chỉ còn mỗi việc khi sử dụng __\`__ ở ```render``` chúng ta không thể sử dụng ```@``` thay cho ```this``` và cộng chuỗi ```alert "Result is: #{varName}"``` theo kiểu của CoffeeScript được. Nhưng vấn đề đó không là gì so với những gì CoffeeScript mang lại, đúng không ạ :D?
+Vậy là OK rồi. Chắc chỉ còn mỗi việc khi sử dụng __\`__ ở `render` chúng ta không thể sử dụng `@` thay cho `this` và cộng chuỗi `alert "Result is: #{varName}"` theo kiểu của CoffeeScript được. Nhưng vấn đề đó không là gì so với những gì CoffeeScript mang lại, đúng không ạ :D?
 
 Demo 2:
 

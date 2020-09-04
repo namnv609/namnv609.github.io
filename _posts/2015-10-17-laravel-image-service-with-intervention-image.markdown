@@ -20,9 +20,9 @@ Mình đã tìm kiếm và gặp thằng [**Intervention Image**](http://image.i
 sudo composer require intervention/image
 ```
 
-Sau đó, vẫn là tạo một file php trong thư mục ``app/Services`` như 02 cái trước. Mình dùng tên ``ThumbnailService.php``. Tiếp theo, bắt đầu code những dòng căn bản như khai báo ``namespace``, ``class name`` và ``use`` thư viện Intervention Image:
+Sau đó, vẫn là tạo một file php trong thư mục `app/Services` như 02 cái trước. Mình dùng tên `ThumbnailService.php`. Tiếp theo, bắt đầu code những dòng căn bản như khai báo `namespace`, `class name` và `use` thư viện Intervention Image:
 
-```PHP
+```php
 <?php
 
 namespace App\Services;
@@ -35,7 +35,7 @@ class ThumbnailService
 
 Khai báo một số ``property`` sẽ dùng:
 
-```PHP
+```php
     /**
      * Instance của Intervention\Image\ImageManager
      */
@@ -90,10 +90,10 @@ Khai báo một số ``property`` sẽ dùng:
 
 Khởi tạo giá trị mặc định cho một số property.
 
-```PHP
-  public function __construct()
+```php
+    public function __construct()
     {
-      /**
+        /**
          * Khởi tạo instance của Intervention Image.
          * Hỗ trợ 2 image extension của PHP. là Imagik và GD
          * Mình dùng GD.
@@ -116,10 +116,10 @@ Khởi tạo giá trị mặc định cho một số property.
     }
 ```
 
-Tiếp đến, viết ``getter`` và ``setter`` cho các ``property``. Đầu tiên là ``$imagePath``
+Tiếp đến, viết `getter` và `setter` cho các `property`. Đầu tiên là `$imagePath`
 
-```PHP
-  /**
+```php
+    /**
      * @param string $imagePath Đường dẫn đến ảnh cần resize
      * @return App\Services\ThumbnailService
      */
@@ -139,10 +139,10 @@ Tiếp đến, viết ``getter`` và ``setter`` cho các ``property``. Đầu ti
     }
 ```
 
-Tỷ lệ ảnh ``$thumbRate``:
+Tỷ lệ ảnh `$thumbRate`:
 
-```PHP
-  /**
+```php
+    /**
      * @param double Tỷ lệ ảnh sẽ resize
      * @return App\Services\ThumbnailService
      */
@@ -162,10 +162,10 @@ Tỷ lệ ảnh ``$thumbRate``:
     }
 ```
 
-Size ảnh ``$thumbWidth`` và ``$thumbHeight``:
+Size ảnh `$thumbWidth` và `$thumbHeight`:
 
-```PHP
-  /**
+```php
+    /**
      * @param integer $thumbWidth
      * @param integer $thumbHeight
      * @return App\Services\ThumbnailService
@@ -194,10 +194,10 @@ Size ảnh ``$thumbWidth`` và ``$thumbHeight``:
     }
 ```
 
-Đường dẫn sẽ lưu ảnh đã resize ``$destPath``:
+Đường dẫn sẽ lưu ảnh đã resize `$destPath`:
 
-```PHP
-  /**
+```php
+    /**
      * @param string $destPath Đường dẫn sẽ lưu ảnh
      * @return App\Services\ThumbnailService
      */
@@ -219,8 +219,8 @@ Size ảnh ``$thumbWidth`` và ``$thumbHeight``:
 
 Tọa độ X và Y để dùng trong trường hợp crop ảnh. Tính từ góc trên cùng bên trái:
 
-```PHP
-  /**
+```php
+    /**
      * @param integer $xCoord Tọa độ X
      * @param integer $yCoord Tọa độ Y
      * @return App\Services\ThumbnailService
@@ -253,8 +253,8 @@ Vị trí để sử dụng khi fit ảnh (resize và crop). Các vị trí đư
     * bottom
     * bottom-left
 
-```PHP
-  /**
+```php
+    /**
      * @param string Vị trí dùng để fit
      * @return App\Services\ThumbnailService
      */
@@ -276,8 +276,8 @@ Vị trí để sử dụng khi fit ảnh (resize và crop). Các vị trí đư
 
 Tên file ảnh sau khi resize:
 
-```PHP
-  /**
+```php
+    /**
      * @param string Tên file sẽ lưu sau khi resize
      * @return App\Services\ThumbnailService
      */
@@ -297,17 +297,17 @@ Tên file ảnh sau khi resize:
     }
 ```
 
-Vậy là xong ``getter`` và ``setter`` cho các ``property``. Giờ chúng ta sẽ đi vào trọng tâm chính của cái service này nhé. Phần thực hiện resize (crop, fit) ảnh :D!
+Vậy là xong `getter` và `setter` cho các `property`. Giờ chúng ta sẽ đi vào trọng tâm chính của cái service này nhé. Phần thực hiện resize (crop, fit) ảnh :D!
 
-```PHP
-  /**
+```php
+    /**
      * @param string $type Kiểu ảnh thumb. fit, crop hoặc resize
      * @param integer $quality Chất lượng ảnh thumbnail
      * @return mixed Tên file đã resize hoặc false khi xảy ra lỗi
      */
     public function save($type = 'fit', $quality = 80)
     {
-      // Lấy tên file sẽ lưu từ file sẽ resize
+        // Lấy tên file sẽ lưu từ file sẽ resize
         $fileName = pathinfo($this->imagePath, PATHINFO_BASENAME);
 
         /**
@@ -346,10 +346,10 @@ Vậy là xong ``getter`` và ``setter`` cho các ``property``. Giờ chúng ta 
 
         // Đặt bẫy cho chắc :D
         try {
-          // Lưu xuống disk
+            // Lưu xuống disk
             $thumbImage->save($destPath, $quality);
         } catch (\Exception $e) {
-          // Log lại lỗi rồi trả false
+            // Log lại lỗi rồi trả false
             \Log::error($e->getMessage());
 
             return false;
@@ -362,34 +362,34 @@ Vậy là xong ``getter`` và ``setter`` cho các ``property``. Giờ chúng ta 
 
 Basic usage:
 
-```PHP
+```php
 use App\Services\ThumbnailService;
 
 $thumbSvc = new ThumbnailService();
 
 // Resize
 $thumbSvc->setImage('path/to/image/')
-     ->setSize(1024)
+         ->setSize(1024)
          ->setDestPath('/path/to/destination')
          ->save('resize');
 
 // Crop
 $thumbSvc->setImage('path/to/image/')
-     ->setSize(1024)
+         ->setSize(1024)
          ->setDestPath('/path/to/destination')
          ->setCoordinates(10, 20)
          ->save('crop');
 
 // Fit
 $thumbSvc->setImage('path/to/image/')
-     ->setSize(1024)
+         ->setSize(1024)
          ->setDestPath('/path/to/destination')
          ->setFitPosition('top-left')
          ->save();
 
 // Custom file name
 $thumbSvc->setImage('path/to/image/')
-     ->setSize(1024)
+         ->setSize(1024)
          ->setDestPath('/path/to/destination')
          ->setFileName(md5(time()) . '.extension')
          ->save('resize');

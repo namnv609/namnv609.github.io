@@ -15,20 +15,20 @@ Các bài viết trên đã giới thiệu khá đầy đủ về Google Maps AP
 
 Đầu tiên, bạn cần require places library bằng lệnh:
 
-```HTML
+```html
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true&libraries=places"></script>
 ```
 
 Sau đó bạn khởi tạo một div chứa map kèm với một thẻ input để nhận dữ liệu từ người dùng:
 
-```HTML
+```html
 <input type="text" id="address" />
 <div class="map-canvas"></div>
 ```
 
 Style tí cho nó đẹp cái nhỉ :D! Mình sẽ dùng SASS nhé.
 
-```SASS
+```sass
 #address
     width: 90%
     padding: 4px
@@ -43,7 +43,7 @@ Style tí cho nó đẹp cái nhỉ :D! Mình sẽ dùng SASS nhé.
 
 Tiếp theo, đến phần code JavaScript. Mình sẽ dùng CoffeeScript nhé ^^!
 
-```JavaScript
+```coffeescript
 # Khởi tạo object chứa kinh/vĩ độ. Mình lấy mặc định là Hà Nội nhé :D
 mapLatLng = new google.maps.LatLng 21.0277644, 105.83415979999995
 # Khởi tạo các tùy chọn cho Map
@@ -69,10 +69,9 @@ google.maps.event.addListener addressAutocomplete, "place_changed", ->
     # Chuyển đánh dấu và map center về vị trí đã nhập
     marker.setPosition placeObj.geometry.location
     map.setCenter placeObj.geometry.location
-
 ```
 
-Để lấy được nhiều thứ hay ho hơn (nếu bạn muốn). Bạn có thể ``console.log`` cái ``placeObj`` ra để xem nhé ^^! Vậy là xong phần autocomplete rồi. Giờ chúng ta sang phần lấy thông tin các địa điểm xung quanh một vị trí trên map nhé.
+Để lấy được nhiều thứ hay ho hơn (nếu bạn muốn). Bạn có thể `console.log` cái `placeObj` ra để xem nhé ^^! Vậy là xong phần autocomplete rồi. Giờ chúng ta sang phần lấy thông tin các địa điểm xung quanh một vị trí trên map nhé.
 
 ### Places search
 
@@ -84,14 +83,14 @@ Places sẽ giúp chúng ta tìm được danh sách các địa điểm (theo t
 
 OK, bây giờ mình sẽ làm demo với thằng __nearby search__ cùng với __place detail request__ nhé. Vẫn dùng demo cũ, nhưng chúng ta sẽ thêm một input nữa để nhận từ khóa của người dùng và một nút tìm kiếm nhé:
 
-```HTML
+```html
 <input type="text" id="keyword" placeholder="trà đá, coffee, bún đậu, ..." />
 <button id="search">Search</button>
 ```
 
 Thêm tí CSS:
 
-```SASS
+```sass
 #keyword
     @extend #address
     margin: 10px 0
@@ -102,7 +101,7 @@ Thêm tí CSS:
 
 Tiếp theo, đến phần JavaScript:
 
-```JavaScript
+```coffeescript
 # Tạo sự kiện khi click search button
 $ "#search"
     .on "click", ->
@@ -177,13 +176,13 @@ placeMarkerMaker = (place) ->
             infoWindow.open map, placeMarker
 ```
 
-Vậy là xong phần tìm kiểm địa điểm bằng PlacesService. Bạn có thể hiển thị chi tiết hơn về địa điểm như số điện thoại, giờ mở/đóng cửa (không sẵn có ở một số nước), hình ảnh, đánh giá, website, ... bằng cách ```console.log``` biến ```details``` ra để xem chi tiết nhé ^^!
+Vậy là xong phần tìm kiểm địa điểm bằng PlacesService. Bạn có thể hiển thị chi tiết hơn về địa điểm như số điện thoại, giờ mở/đóng cửa (không sẵn có ở một số nước), hình ảnh, đánh giá, website, ... bằng cách `console.log` biến `details` ra để xem chi tiết nhé ^^!
 
 ## Directions service
 
 Tiếp theo, mình sẽ giới thiệu về __Directions service__ của Google Maps API. Service này giúp bạn vẽ đường đi từ điểm A đến điểm B. Chúng ta cũng sẽ làm luôn với demo cũ. Với mục đích khi người dùng click vào một địa điểm, ngoài việc hiển thị chi tiết về địa điểm đó, chúng ta sẽ dẫn đường cho họ luôn, tính từ vị trí hiện tại trên bản đồ.
 
-```JavaScript
+```coffeescript
 # Khởi tạo directions display và directions service
 directionsDisplay = new google.maps.DirectionsRenderer
     suppressMarkers: yes # Không hiển thị đánh dấu điểm A và B
@@ -227,7 +226,7 @@ Service Geocoder sẽ giúp chuyển đổi một địa chỉ mà chúng ta có
 
 Đầu tiên, tạo một input để nhận dữ liệu (có thể là địa chỉ hay kinh/vĩ độ) và một button để thực hiện việc chuyển đổi này:
 
-```HTML
+```html
 <input type="text" id="address" />
 <button id="detail">Detail</button>
 <div id="result"></div>
@@ -235,7 +234,7 @@ Service Geocoder sẽ giúp chuyển đổi một địa chỉ mà chúng ta có
 
 Đến phần JS
 
-```JavaScript
+```coffeescript
 # Gắn sự kiện cho button
 $ "#detail"
     .on "click", ->
@@ -268,6 +267,6 @@ $ "#detail"
                 .focus()
 ```
 
-__Demo__: [http://codepen.io/namnv609/pen/rVqKRQ](http://codepen.io/namnv609/pen/rVqKRQ). Các bạn có thể nhập dữ liệu là địa chỉ hoặc lat/lng nhé. Ví dụ:```keangnam me tri, tu liem, ha noi``` hoặc ```10.8230989, 106.629663``` rồi xem kết quả như thế nào nhé ^^!
+__Demo__: [http://codepen.io/namnv609/pen/rVqKRQ](http://codepen.io/namnv609/pen/rVqKRQ). Các bạn có thể nhập dữ liệu là địa chỉ hoặc lat/lng nhé. Ví dụ:`keangnam me tri, tu liem, ha noi` hoặc `10.8230989, 106.629663` rồi xem kết quả như thế nào nhé ^^!
 
 Trên đây, mình đã giới thiệu qua về những gì mình đã tìm hiểu được từ 3 service của Google Maps API JavaScript V3. Nếu có gì sai sót, mong mọi người góp ý ^^!

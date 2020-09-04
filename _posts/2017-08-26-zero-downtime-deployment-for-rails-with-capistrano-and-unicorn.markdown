@@ -261,7 +261,6 @@ set :bundle_binstubs, nil
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, "/var/www/html/#{fetch(:application)}"
 
-
 # Default value for :linked_files is []
 set :linked_files, fetch(:linked_files, [])
   .push("config/database.yml", "config/secrets.yml")
@@ -367,7 +366,7 @@ vi /etc/init.d/unicorn_deploy
 
 Sau đó, thêm đoạn sau:
 
-```shell
+```sh
 #!/bin/sh
 set -u
 set -e

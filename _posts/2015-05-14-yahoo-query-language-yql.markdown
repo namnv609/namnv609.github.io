@@ -25,13 +25,13 @@ Mình sẽ hướng dẫn mọi người viết một non-official API đơn gi�
 
 Chúng ta tạo hẳn một class với tên NhacCuaTui cho hịn nhé :))!
 
-```JavaScript
+```coffeescript
 NhacCuaTui = ->
 ```
 
 Trong class này có một private object chứa hai phần tử là URL của YQL và URL tìm kiếm của NhacCuaTui (mình sử dụng domain dành cho mobile để có tốc độ truy xuất nhanh hơn):
 
-```JavaScript
+```coffeescript
     _apiSettings =
         apiURL: "http://m.nhaccuatui.com/tim-kiem/bai-hat?q="
         endpointURL: "https://query.yahooapis.com/v1/public/yql?q="
@@ -39,7 +39,7 @@ Trong class này có một private object chứa hai phần tử là URL của Y
 
 Tiếp theo, chúng ta sẽ có một private function để truy xuất dữ liệu từ YQL, hàm này sẽ nhận câu truy vấn và trả về object dữ liệu từ YQL:
 
-```JavaScript
+```coffeescript
     _yqlExecuteQuery = (yqlStatement) ->
         yqlResult = {}
         $.ajax
@@ -56,7 +56,7 @@ Tiếp theo, chúng ta sẽ có một private function để truy xuất dữ li
 
 Tiếp theo đến public function search, nhận tham số là từ khóa và trả về một object chứa danh sách kết quả tìm được:
 
-```JavaScript
+```coffeescript
     @search = (keyword) ->
         # Mã hóa từ khóa sang dạng URI #
         keyword = encodeURIComponent keyword.trim()
@@ -83,7 +83,7 @@ Tiếp theo đến public function search, nhận tham số là từ khóa và t
 
 Xong phần tìm kiếm. Bây giờ đến phần lấy direct link của bài hát. Public function này sẽ nhận tham số là link bài hát và trả về object chứa trạng thái với direct link của bài hát đó:
 
-```JavaScript
+```coffeescript
     @get = (link) ->
         result =
             status: false
@@ -103,7 +103,7 @@ Xong phần tìm kiếm. Bây giờ đến phần lấy direct link của bài h
 
 Vậy là xong rồi. Bây giờ chúng ta sẽ thử test API của mình nhé. Mình sẽ sử dụng React.JS để test. Từ khi quen viết React.JS mình rất ngại sửa HTML DOM bằng jQuery :D!
 
-```JavaScript
+```coffeescript
 ###* @jsx React.DOM ###
 
 SearchBar = React.createClass

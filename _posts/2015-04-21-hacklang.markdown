@@ -10,7 +10,7 @@ Hack cho phép các lập trình viên sử dụng kiểu tĩnh (static type) v�
 
 Hack cho phép chúng ta định nghĩa kiểu của dữ liệu trong các trường hợp như: tham số truyền vào của function, kiểu dữ liệu trả về của function (giống với ActionScript) và các thuộc tính của class, tuy nhiên, các biến local lại không thể khai báo kiểu của biến.
 
-```PHP
+```php
 <?hh
 
 function negate(bool $x): bool {
@@ -20,14 +20,14 @@ function negate(bool $x): bool {
 
 Cấu trúc cơ bản của một file Hack tương tự như PHP nhưng có 1 vài thay đổi nhỏ như Hack thì bắt đầu với <?hh, còn PHP thì là <?php.
 
-```PHP
+```php
 <?hh
 echo 'Hello world';
 ```
 
 Và một điều đặc biệt không giống với PHP mà bạn cần phải lưu ý, Hack không cho phép kết hợp HTML trong file như đoạn code PHP dưới đây:
 
-```PHP
+```php
 <html lang="vi-VN">
     <head>
         <title>PHP Test</title>
@@ -44,13 +44,13 @@ Thay vào đó, bạn có thể sử dụng [XHP](https://github.com/facebook/xh
 
 Đầu tiên, chúng ta sẽ tạo 1 file với tên *BiasRandom.hh*. Mở file đó ra với editor bất kỳ (Notepad++, SublimeText, ...) và bắt đầu với cấu trúc cơ bản của Hack:
 
-```PHP
+```php
 <?hh // strict
 ```
 
 Tiếp theo, chúng ta tạo **namespace** và **class** như bình thường trong PHP
 
-```PHP
+```php
 namespace wataridori\BiasRandom;
 
 class BiasRandom
@@ -61,13 +61,13 @@ class BiasRandom
 
 Vẫn chưa có gì khác biệt ngoài kiểu mở đầu file. OK, giờ mới bắt đầu, chúng ta khai báo property ```$data``` cho class BiasRandom. Property này là một array (key và value), với key là số nguyên (int) hoặc chuỗi (string) và giá trị là số, nên ta sẽ khai báo như sau:
 
-```PHP
+```php
 public array<mixed, int> $data = [];
 ```
 
 Khác rồi đúng không ạ :D? Trong Hack, kiểu dữ liệu **mixed** sẽ cho phép bạn sử dụng bất kỳ kiểu dữ liệu nào (giống với việc khai báo ```var varName``` trong các ngôn ngữ OOP truyền thống). Tiếp theo, chúng ta sẽ khai báo constructor với param mảng dữ liệu mặc định là mảng rỗng và hàm này không trả về giá trị nào nên nó sẽ là ```void```:
 
-```PHP
+```php
 public function __construct(array<mixed, int> $data = []): void
 {
     $this->data = $data;
@@ -76,7 +76,7 @@ public function __construct(array<mixed, int> $data = []): void
 
 Đến hàm thêm phần tử cho property ```$data```, hàm này nhận hai tham số là ```$name``` (key của mảng), do chúng ta đã khai báo property ```$data``` có key là kiểu ```mixed``` (để nhận giá trị string hoặc int) nên kiểu dữ liệu của ```$name``` sẽ là mixed, tham số ```$weight``` (là giá trị của mảng), chúng ta khai báo kiểu int nên ```$weight``` cũng sẽ là int nhé. Và hàm này trả về một giá trị boolean
 
-```PHP
+```php
 public function addElement(mixed $name, int $weight): bool
 {
     if (is_string($name) || is_numeric($name)) {
@@ -94,35 +94,28 @@ Bạn có nhận thấy hàm này khác một chút so với source của Thắn
 ```Catchable fatal error: Argument 2 passed to wataridori\BiasRandom\BiasRandom::addElement() must be an instance of int, string given in /path/to/file/BiasRandom.hh on line 23```
 
 Bây giờ đến hàm xóa phần tử trong property ```$data```, với tham số là key cần xóa của mảng và hàm này không trả giá trị:
-```PHP
-
+```php
 public function removeElement(mixed $name): void
 {
     unset($this->data[$name]);
 }
-
 ```
 Đến hàm set giá trị cho property ```$data```, hàm này nhận tham số là 1 mảng dữ liệu và không trả về giá trị:
-```PHP
-
+```php
 public function setData(array<mixed, int> $data): void
 {
     $this->data = $data;
 }
-
 ```
 Tiếp theo, đến hàm lấy giá trị hiện tại của property ```$data```, hàm này không nhận tham số nào, nhưng có trả về mảng dữ liệu của property data:
-```PHP
-
+```php
 public function getData(): array<mixed, int>
 {
     return $this->data;
 }
-
 ```
 Đến hàm random data với mảng dữ liệu mà bạn truyền vào, hàm này nhận mảng dữ liệu và trả về giá trị kiểu int hoặc string:
-```PHP
-
+```php
 public function getRandom(array<mixed, int> $data): mixed
 {
     $total = 0;
@@ -141,11 +134,9 @@ public function getRandom(array<mixed, int> $data): mixed
         }
     }
 }
-
 ```
 Và cuối cùng là hàm random data với tham số là số nguyên và giá trị trả về là mảng dữ liệu:
-```PHP
-
+```php
 public function random(int $count = 1): array<mixed, int>
 {
     $data = $this->data;
@@ -163,12 +154,10 @@ public function random(int $count = 1): array<mixed, int>
 
     return $result;
 }
-
 ```
 
 Bây giờ chúng ta sẽ tạo một file test đơn gỉan xem những gì ta viết có chạy được không nhé. Tạo một file với tên ```TestBiasRandom.hh``` và mở nó với một editor bất kỳ và code:
-```PHP
-
+```php
 <?hh // strict
 
 require_once 'BiasRandom.hh';
@@ -187,19 +176,17 @@ $biasRandom->addElement('Framgia', 50);
 $biasRandom->addElement('Viblo', 5);
 
 print_r($biasRandom->random());
-
 ```
 
-Sau đó chúng ta CD tới thư mục chứa file test và chạy lệnh sau để xem kết quả:
-```hhvm TestBiasRandom.hh```
+Sau đó chúng ta CD tới thư mục chứa file test và chạy lệnh sau để xem kết quả: `hhvm TestBiasRandom.hh`
 
 Bây giờ chúng ta thử truyền sai kiểu dữ liệu cho hàm addElement xem có lỗi gì không nhé :D
 
-```
+```php
 $biasRandom->addElement('Hiphop, '20');
 ```
 
-Chạy lại ```hhvm TestBiasRandom.hh``` để xem kết quả nào :))!
+Chạy lại `hhvm TestBiasRandom.hh` để xem kết quả nào :))!
 
 Trên đây là những gì mình đã tìm hiểu được. Có gì sai sót, mọi người comment góp ý để mình sửa nhé :D! Mình sẽ tiếp tục tìm hiểu Hack và chia sẻ cùng với mọi người trong những bài tiếp theo.
 

@@ -126,7 +126,7 @@ pwgen -N 1 -s 96
 echo -n <yourpassword> | sha256sum
 ```
 
-> **Chú ý**: Ở lệnh sinh root password sẽ có thêm đoạn `  -` sau mật khẩu đã được mã hóa, bạn không cần phải copy đoạn đó. Ví dụ, mình tạo password **123456**
+> **Chú ý**: Ở lệnh sinh root password sẽ có thêm đoạn `-` sau mật khẩu đã được mã hóa, bạn không cần phải copy đoạn đó. Ví dụ, mình tạo password **123456**
 > `echo -n 123456 | sha256sum`
 > Chúng ta sẽ nhận được dữ liệu như sau: `8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92  -`
 > Bạn chỉ cần `8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92` là đủ

@@ -12,30 +12,30 @@ Trong project vừa qua, có yêu cầu sử dụng email để xác nhận và 
 
 Okie, giờ chúng ta sẽ đi thẳng luôn vào việc viết service nhé. Đầu tiên bạn cần cài **SendGrid PHP** thông qua **Composer** bằng lệnh:
 
-``sudo composer require sendgrid/sendgrid``
+`sudo composer require sendgrid/sendgrid`
 
-Cài đặt xong, chúng ta sẽ thêm một số cài đặt cho **SendGrid** vào file ``.env``:.
+Cài đặt xong, chúng ta sẽ thêm một số cài đặt cho **SendGrid** vào file `.env`:.
 
 ```
 SENDGRID_API_KEY=null
 SENDGRID_EXCEPTION=true
 ```
 
-Trong đó, ``SENDGRID_API_KEY`` để chúng ta set API key của **SendGrid**, ``SENDGRID_EXCEPTION`` là để cài đặt việc có xuất exception khi gửi mail bị lỗi hay không. Khi đưa lên production thì bạn nên chuyển thành false cho an toàn nhé.
+Trong đó, `SENDGRID_API_KEY` để chúng ta set API key của **SendGrid**, `SENDGRID_EXCEPTION` là để cài đặt việc có xuất exception khi gửi mail bị lỗi hay không. Khi đưa lên production thì bạn nên chuyển thành false cho an toàn nhé.
 
-Tiếp theo, chúng ta sẽ tạo file ``SendGridService.php`` trong thư mục ``app\Services`` nhé. Bắt đầu "cột" nào (ban)!
+Tiếp theo, chúng ta sẽ tạo file `SendGridService.php` trong thư mục `app\Services` nhé. Bắt đầu "cột" nào (ban)!
 
 Mở đầu vẫn là thứ cơ bản của một file PHP thông thường:
 
-```PHP
+```php
 <?php
 
 namespace App\Services;
 ```
 
-Chúng ta sẽ use một số class quan trọng để thực hiện việc gửi mail như ``Log`` (để lưu lại exception trong trường hợp xảy ra lỗi) của Laravel và ``SendGrid``, ``Email``, ``Exception`` của **SendGrid**:
+Chúng ta sẽ use một số class quan trọng để thực hiện việc gửi mail như `Log` (để lưu lại exception trong trường hợp xảy ra lỗi) của Laravel và `SendGrid`, `Email`, `Exception` của **SendGrid**:
 
-```PHP
+```php
 use Log;
 use SendGrid;
 use SendGrid\Email as SendGridEmail;
@@ -44,11 +44,11 @@ use SendGrid\Exception as SendGridException;
 
 Khởi tạo class và khai báo một số property cần thiết:
 
-```PHP
+```php
 class SendGridService
 {
-  // Instance của SendGrid
-  private $sendGrid;
+    // Instance của SendGrid
+    private $sendGrid;
     // Instance của SendGridEmail
     private $sendGridEmail;
     // Địa chỉ nhận
@@ -79,12 +79,12 @@ class SendGridService
 
 Khởi tạo **SendGrid**, **SendGridEmail** instance và giá trị mặc định cho một số property:
 
-```PHP
-  public function __construct()
+```php
+    public function __construct()
     {
-      // Khởi tạo SendGrid instance với các cài đặt từ .env
+        // Khởi tạo SendGrid instance với các cài đặt từ .env
         $this->sendGrid = new SendGrid(env('SENDGRID_API_KEY', [
-          'raise_exceptions' => env('SENDGRID_EXCEPTION', true)
+            'raise_exceptions' => env('SENDGRID_EXCEPTION', true)
         ]);
 
         // Khởi tạo SendGridEmail instance
@@ -102,29 +102,29 @@ Khởi tạo **SendGrid**, **SendGridEmail** instance và giá trị mặc đị
     }
 ```
 
-Bây giờ, đến phần viết ``setter`` và ``getter`` cho các property. Đầu tiên là property ``$to`` (địa chỉ sẽ nhận email):
+Bây giờ, đến phần viết `setter` và `getter` cho các property. Đầu tiên là property `$to` (địa chỉ sẽ nhận email):
 
-```PHP
-  /**
+```php
+    /**
      * Set to email address
      *
      * @var mixed $to String or array email address
      * @return App\Services\SendGridService
      */
-  public function setTo($to)
+    public function setTo($to)
     {
-      /*
+        /*
          * Nếu $to là một array chứa danh sách người nhận
          * chúng ta sẽ merge nó lại. Còn là string (một người)
          * thì chúng ta gắn nó vào mảng $to
          */
-         if (is_array($to)) {
-          $this->to = array_merge($to, $this->to);
-         } else {
-          $this->to[] = $to;
-         }
+        if (is_array($to)) {
+            $this->to = array_merge($to, $this->to);
+        } else {
+            $this->to[] = $to;
+        }
 
-         return $this;
+        return $this;
     }
 
     /**
@@ -138,10 +138,10 @@ Bây giờ, đến phần viết ``setter`` và ``getter`` cho các property. Đ
     }
 ```
 
-Đến property ``$from`` và ``$fromName``. Vì ở ``__constructor``, chúng ta lấy ``$from`` và ``$fromName`` từ file ``.env`` nên chúng ta chỉ có ``getter`` chứ không có ``setter``:
+Đến property `$from` và `$fromName`. Vì ở `__constructor`, chúng ta lấy `$from` và `$fromName` từ file `.env` nên chúng ta chỉ có `getter` chứ không có `setter`:
 
-```PHP
-  /**
+```php
+    /**
      * Get email send from
      *
      * @return string Email address
@@ -162,10 +162,10 @@ Bây giờ, đến phần viết ``setter`` và ``getter`` cho các property. Đ
     }
 ```
 
-Đến 02 property ``$cc`` (carbon copy) gửi bản sao đến địa chỉ email này và ``$bcc`` (blind carbon copy) cũng giống như CC nhưng khác CC ở chỗ là  người nhận sẽ không biết chúng ta đã BCC đến những địa chỉ email nào. Vì 02 property này cũng nhận ``string`` hoặc ``array`` giống ``$to`` nên mọi người có thể scroll ngược lên để xem ở function ``setTo`` nhé.
+Đến 02 property `$cc` (carbon copy) gửi bản sao đến địa chỉ email này và `$bcc` (blind carbon copy) cũng giống như CC nhưng khác CC ở chỗ là  người nhận sẽ không biết chúng ta đã BCC đến những địa chỉ email nào. Vì 02 property này cũng nhận `string` hoặc `array` giống `$to` nên mọi người có thể scroll ngược lên để xem ở function `setTo` nhé.
 
-```PHP
-  /**
+```php
+    /**
      * Set CC
      *
      * @var mixed $cc String or array email address
@@ -221,9 +221,9 @@ Bây giờ, đến phần viết ``setter`` và ``getter`` cho các property. Đ
     }
 ```
 
-Tiếp theo là property ``$replyTo``. Property này mình chỉ nhận một địa chỉ email sẽ được reply nên không cần phải kiểm tra như 03 thằng ``$to``, ``$cc`` và ``$bcc``:
+Tiếp theo là property `$replyTo`. Property này mình chỉ nhận một địa chỉ email sẽ được reply nên không cần phải kiểm tra như 03 thằng `$to`, `$cc` và `$bcc`:
 
-```PHP
+```php
   /**
      * Set reply to
      *
@@ -250,8 +250,8 @@ Tiếp theo là property ``$replyTo``. Property này mình chỉ nhận một đ
 
 Đến tiêu đề của email:
 
-```PHP
-  /**
+```php
+    /**
      * Set email subject
      *
      * @param string $subject Email subject
@@ -277,8 +277,8 @@ Tiếp theo là property ``$replyTo``. Property này mình chỉ nhận một đ
 
 Data (dữ liệu) sẽ được parse vào view trong trường hợp gửi HTML:
 
-```PHP
-  /**
+```php
+    /**
      * Set email layout variable data
      *
      * @var array $data Email data
@@ -304,8 +304,8 @@ Data (dữ liệu) sẽ được parse vào view trong trường hợp gửi HTM
 
 Đường dẫn đến file template chứa HTML:
 
-```PHP
-  /**
+```php
+    /**
      * Set email layout (template)
      *
      * @param string $layoutPath Path to email layout
@@ -331,7 +331,7 @@ Data (dữ liệu) sẽ được parse vào view trong trường hợp gửi HTM
 
 Kiểu gửi email (HTML hoặc plaintext):
 
-```PHP
+```php
   /**
      * Set email type (HTML or Text only)
      *
@@ -358,8 +358,8 @@ Kiểu gửi email (HTML hoặc plaintext):
 
 Nội dung cho email không phải là HTML (plaintext):
 
-```PHP
-  /**
+```php
+    /**
      * Set email content (for email type isHtml is false)
      *
      * @param string Email content
@@ -375,8 +375,8 @@ Nội dung cho email không phải là HTML (plaintext):
 
 Lấy nội dung email (cho cả 02 trường hợp là HTML hoặc plaintext):
 
-```PHP
-  /**
+```php
+    /**
      * Get email content (for both HTML and Text)
      *
      * @return string Email content (HTML or Text)
@@ -395,15 +395,15 @@ Lấy nội dung email (cho cả 02 trường hợp là HTML hoặc plaintext):
 
 Cuối cùng là function gửi mail nữa là chúng ta đã hoàn thành service này (hura):
 
-```PHP
-  /**
+```php
+    /**
      * Send email
      *
      * @return bool Send email status
      */
     public function send()
     {
-      // Lấy nội dung email
+        // Lấy nội dung email
         $content = $this->getContent();
 
         // Set một số thông tin cơ bản cho SendGridEmail
@@ -412,14 +412,14 @@ Cuối cùng là function gửi mail nữa là chúng ta đã hoàn thành servi
                             ->setFromName($this->fromName)
                             ->setSubject($this->subject);
 
-    // Set nội dung email cho trường hợp HTML hoặc plaintext
+        // Set nội dung email cho trường hợp HTML hoặc plaintext
         if ($this->isHtml) {
             $this->sendGridEmail->setHtml($content);
         } else {
             $this->sendGridEmail->setText($content);
         }
 
-      // Kiểm tra một số optional property, nếu nó có thì mới set
+        // Kiểm tra một số optional property, nếu nó có thì mới set
         if (count($this->cc)) {
             $this->sendGridEmail->setCcs($this->cc);
         }
@@ -439,7 +439,7 @@ Cuối cùng là function gửi mail nữa là chúng ta đã hoàn thành servi
             // Nếu thành công, trả về true
             return true;
         } catch (SendGridException $e) {
-          // Bẫy SendGrid exception
+            // Bẫy SendGrid exception
             Log::error('SendGrid error code: ' . $e->getCode());
             Log::error($e->getErrors());
         } catch (\Exception $e) {

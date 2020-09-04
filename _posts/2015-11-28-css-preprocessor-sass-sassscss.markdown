@@ -15,8 +15,8 @@ CSS là chữ viết tắt của cụm từ tiếng Anh **Cascading Style Sheet*
 Khi trang web được tải, browser sẽ tiến hành đọc toàn bộ style mà trang web có thể áp dụng bao gồm:
 
 * Style mặc định của trình duyệt
-* External style (style bên ngoài, được nhúng vào thông qua thẻ ``<link />``)
-* Internal style (style đặt trong cặp thẻ ``<style></style>``)
+* External style (style bên ngoài, được nhúng vào thông qua thẻ `<link />`)
+* Internal style (style đặt trong cặp thẻ `<style></style>`)
 * Inline style (style viết trực tiếp trong thẻ HTML thông qua thuộc tính (attribute) **style**
 
 Sau đó, browser sẽ tổng hợp lại vào một bộ CSS ảo của nó. Và nếu có các thuộc tính giống nhau của một selector (class, tag, id, ...) thì browser sẽ ưu tiên áp dụng style nào được nạp sau cùng. Như vậy, thì thứ tự ưu tiên sẽ là:
@@ -25,13 +25,13 @@ Sau đó, browser sẽ tổng hợp lại vào một bộ CSS ảo của nó. V�
 Inline style > Internal style > External style > Browser default style
 ```
 
-Vậy, có cách nào để thay đổi (chiếm) độ ưu tiên của các CSS property hay không? Câu trả lời là có. Nếu muốn thay đổi độ ưu tiên của một thuộc tính, bạn chỉ cần thêm ``!important`` vào sau giá trị của thuộc tính đó. Và thứ tự ưu tiên áp dụng của ``!important`` cũng giống như thứ tự áp dụng bên trên nhé => ``!important`` của Inline style sẽ là cao nhất :)) (vì vậy, mọi người nên tránh hoặc hạn chế sử dụng ``!important`` nhé)!
+Vậy, có cách nào để thay đổi (chiếm) độ ưu tiên của các CSS property hay không? Câu trả lời là có. Nếu muốn thay đổi độ ưu tiên của một thuộc tính, bạn chỉ cần thêm `!important` vào sau giá trị của thuộc tính đó. Và thứ tự ưu tiên áp dụng của `!important` cũng giống như thứ tự áp dụng bên trên nhé => `!important` của Inline style sẽ là cao nhất :)) (vì vậy, mọi người nên tránh hoặc hạn chế sử dụng `!important` nhé)!
 
 #### Quy tắc viết CSS
 
-Khi viết CSS cho website, mọi người nên hạn chế viết inline style, internal style và sử dụng ``!important`` nhé. Nên viết external style (các style trong file ``*.css`` riêng biệt) để dễ dàng bảo trì, dễ dàng thay đổi thứ tự ưu tiên cho các thuộc tính của một số thẻ riêng biệt mà không cần phải sử dụng đến ``!important``. Và để tránh chồng chéo các thuộc tính của CSS, chúng ta nên viết chi tiết cho các selector (class, tag, id, ...) nhé. Để dễ hình dung, mình sẽ có một ví dụ (không bao gồm sử dụng ``!important`` và inline style nhé). Viết style cho một class bằng internal style và external style như sau:
+Khi viết CSS cho website, mọi người nên hạn chế viết inline style, internal style và sử dụng `!important` nhé. Nên viết external style (các style trong file `*.css` riêng biệt) để dễ dàng bảo trì, dễ dàng thay đổi thứ tự ưu tiên cho các thuộc tính của một số thẻ riêng biệt mà không cần phải sử dụng đến `!important`. Và để tránh chồng chéo các thuộc tính của CSS, chúng ta nên viết chi tiết cho các selector (class, tag, id, ...) nhé. Để dễ hình dung, mình sẽ có một ví dụ (không bao gồm sử dụng `!important` và inline style nhé). Viết style cho một class bằng internal style và external style như sau:
 
-```HTML
+```html
 <link type="text/css" rel="stylesheet" href="style.css" />
 <style>
   .child {
@@ -49,7 +49,7 @@ Khi viết CSS cho website, mọi người nên hạn chế viết inline style,
 </div>
 ```
 
-```CSS
+```css
 .third .child {
   color: #F00; /*#FF0000 - Red*/
 }
@@ -67,7 +67,7 @@ Khi viết CSS cho website, mọi người nên hạn chế viết inline style,
 }
 ```
 
-Nhìn vào đoạn hai đoạn code trên, bạn nghĩ văn bản trong class ``.child`` sẽ có màu gì? Theo thứ tự áp dụng bên trên, thì nó sẽ là màu #00F (blue) vì màu #00F cho class ``.child`` được viết trong cặp thẻ ``<style></style>`` - internal style mà. Nhưng màu của nó lại là màu cyan (#0FF) cơ :D! Sao lại thế (?)? Vì chúng ta viết màu #0FF cho class ``.child`` chi tiết hơn (lần lượt từ cái trên nhất xuống, nên nó được ưu tiên tương tự như inline style). Theo đó, nếu ta viết CSS thuần thì việc viết chi tiết như thế này sẽ rất nhàm chán, và sẽ phải lặp đi lặp lại một loạt các class cha giống nhau cho nhiều class con bên trong. Thảm họa đấy (với một thằng lười như mình :D). Vậy nên, chúng ta sẽ đi tìm hiểu SASS - một CSS Preprocessor nhóe!
+Nhìn vào đoạn hai đoạn code trên, bạn nghĩ văn bản trong class `.child` sẽ có màu gì? Theo thứ tự áp dụng bên trên, thì nó sẽ là màu #00F (blue) vì màu #00F cho class `.child` được viết trong cặp thẻ `<style></style>` - internal style mà. Nhưng màu của nó lại là màu cyan (#0FF) cơ :D! Sao lại thế (?)? Vì chúng ta viết màu #0FF cho class `.child` chi tiết hơn (lần lượt từ cái trên nhất xuống, nên nó được ưu tiên tương tự như inline style). Theo đó, nếu ta viết CSS thuần thì việc viết chi tiết như thế này sẽ rất nhàm chán, và sẽ phải lặp đi lặp lại một loạt các class cha giống nhau cho nhiều class con bên trong. Thảm họa đấy (với một thằng lười như mình :D). Vậy nên, chúng ta sẽ đi tìm hiểu SASS - một CSS Preprocessor nhóe!
 
 #### CSS Preprocessor là gì?
 
@@ -91,21 +91,21 @@ SASS (**Syntactically Awesome StyleSheets**) là một phần mở rộng của 
 * Các đặc tính nâng cao như các control directive
 * Có cấu trúc, tùy biến đầu ra
 
-SASS có hai định dạng file là ``*.sass`` và ``*.scss``. Và cách viết của hai định dạng này cũng là khác nhau (nhưng các control directive, function thì có cùng một ý nghĩa). Và nếu bạn biết một cái, thì bạn cũng có thể viết được cái thứ hai. Điểm qua một số sự khác biệt trong cách viết (mà mình biết) của hai định dạng file này nhé:
-* ``*.sass``:
+SASS có hai định dạng file là `*.sass` và `*.scss`. Và cách viết của hai định dạng này cũng là khác nhau (nhưng các control directive, function thì có cùng một ý nghĩa). Và nếu bạn biết một cái, thì bạn cũng có thể viết được cái thứ hai. Điểm qua một số sự khác biệt trong cách viết (mà mình biết) của hai định dạng file này nhé:
+* `*.sass`:
   * Sử dụng indent để thể hiện quy tắc xếp chồng (nested rules)
-    * Không cần sử dụng ``;`` khi kết thúc một property
-    * Khai báo mixins bằng ký tự ``=``
-    * Sử dụng mixins bằng ký tự ``+``
-* ``*.scss``:
-  * Sử dụng dấu ``{`` và ``}`` để thể hiện quy tắc xếp chồng (nested rules)
-    * Sử dụng ``;`` để kết thúc một property
-    * Khai báo mixins bằng directive ``@mixin``
-    * Sử dụng mixins bằng directive ``@include``
+    * Không cần sử dụng `;` khi kết thúc một property
+    * Khai báo mixins bằng ký tự `=`
+    * Sử dụng mixins bằng ký tự `+`
+* `*.scss`:
+  * Sử dụng dấu `{` và `}` để thể hiện quy tắc xếp chồng (nested rules)
+    * Sử dụng `;` để kết thúc một property
+    * Khai báo mixins bằng directive `@mixin`
+    * Sử dụng mixins bằng directive `@include`
 
 Ví dụ về hai cách viết trên:
 
-```SASS
+```sass
 $vendorPrefixes: (-webkit-, -moz-, -khtml-, -o-, -ms-)
 
 =css3-prefix($property, $value...)
@@ -118,7 +118,7 @@ body
     +css3-prefix(border-radius, 3px)
 ```
 
-```SCSS
+```scss
 $vendorPrefixes: (-webkit-, -moz-, -khtml-, -o-, -ms-);
 
 @mixin css3-prefix($property, $value...) {
@@ -139,11 +139,11 @@ Bây giờ, mình sẽ giới thiệu một số control directive căn bản m�
 
 #### @-Rules và Directives
 
-##### __``@import``__
+##### __`@import`__
 
-Cho phép bạn import các rule, style, biến, mixins, functions, ... từ một file SASS khác. Và nó sẽ được gộp lại thành một file khi xuất ra file CSS. Directive ``@import`` nhận một chuỗi là tên file sẽ được import. Mặc định, khi tên file không có phần mở rộng (extension), thì nó sẽ ưu tiên tìm file có phần mở rộng là ``*.scss`` và ``*.sass``!
+Cho phép bạn import các rule, style, biến, mixins, functions, ... từ một file SASS khác. Và nó sẽ được gộp lại thành một file khi xuất ra file CSS. Directive `@import` nhận một chuỗi là tên file sẽ được import. Mặc định, khi tên file không có phần mở rộng (extension), thì nó sẽ ưu tiên tìm file có phần mở rộng là `*.scss` và `*.sass`!
 
-```SASS
+```sass
 @import "../common/css3-mixins"
 // Hoặc
 @import "../common/css3-mixins.sass"
@@ -151,15 +151,15 @@ Cho phép bạn import các rule, style, biến, mixins, functions, ... từ m�
 
 Hoặc bạn cũng có thể import nhiều file cùng một lệnh:
 
-```SASS
+```sass
 @import "../common/css3-mixins", "../components/_header"
 ```
 
-##### __``@extend``__
+##### __`@extend`__
 
 Cho phép bạn thừa kế các property của một class khác.
 
-```SASS
+```sass
 .alert
   padding: 10px
   font:
@@ -170,7 +170,7 @@ Cho phép bạn thừa kế các property của một class khác.
   color: #F00
 ```
 
-```CSS
+```css
 .alert, .error {
   padding: 10px;
   font-family: tahoma;
@@ -183,11 +183,11 @@ Cho phép bạn thừa kế các property của một class khác.
 
 ```
 
-##### __``@each``__
+##### __`@each`__
 
 Giúp bạn duyệt một danh sách (list) hay một map các giá trị. Dùng trong trường hợp phải viết một số lệnh giống nhau, nhưng chỉ khác chút về giá trị của property.
 
-```SASS
+```sass
 $userStatuses: (online: #0F0, idle: #FF0, offline: #CCC)
 
 @each $class, $color in $userStatuses
@@ -195,7 +195,7 @@ $userStatuses: (online: #0F0, idle: #FF0, offline: #CCC)
     background-color: #{$color}
 ```
 
-```CSS
+```css
 .user-online {
   background-color: #0F0;
 }
@@ -209,19 +209,19 @@ $userStatuses: (online: #0F0, idle: #FF0, offline: #CCC)
 }
 ```
 
-##### __``@mixin``__
+##### __`@mixin`__
 
-Giúp bạn định nghĩa một khối các style có thể được sử dụng lại nhiều lần. Trong SASS, ngoài ``@mixin`` còn ``@function``, về bản chất nó giống nhau. Nhưng khác một chỗ, ``@mixin`` không trả về (``@return``) giá trị nào cả (gọi nó là void function cũng được :D), còn ``@function`` thì luôn phải trả về một giá trị. Về ví dụ, bạn có thể xem lại phần giới thiệu về cách viết giữa ``*.sass`` và ``*.scss`` ở trên nhé :D!
+Giúp bạn định nghĩa một khối các style có thể được sử dụng lại nhiều lần. Trong SASS, ngoài `@mixin` còn `@function`, về bản chất nó giống nhau. Nhưng khác một chỗ, `@mixin` không trả về (`@return`) giá trị nào cả (gọi nó là void function cũng được :D), còn `@function` thì luôn phải trả về một giá trị. Về ví dụ, bạn có thể xem lại phần giới thiệu về cách viết giữa `*.sass` và `*.scss` ở trên nhé :D!
 
-##### __``@include``__
+##### __`@include`__
 
-Dùng để gọi các ``@mixin`` (trong ``*.scss``). Ví dụ, bạn cũng có thể xem ở phần giới thiệu về cách viết của ``*.sass`` và ``*.scss``!
+Dùng để gọi các `@mixin` (trong `*.scss`). Ví dụ, bạn cũng có thể xem ở phần giới thiệu về cách viết của `*.sass` và `*.scss`!
 
-##### __``@content``__
+##### __`@content`__
 
-Directive này giúp bạn lấy toàn bộ nội dung của một khối để đưa vào ``@mixin``. Mình sẽ viết ví dụ để mọi người dễ hình dung.
+Directive này giúp bạn lấy toàn bộ nội dung của một khối để đưa vào `@mixin`. Mình sẽ viết ví dụ để mọi người dễ hình dung.
 
-```SASS
+```sass
 =keyframes($animationName)
   @-webkit-keyframes $animationName
     @content
@@ -241,7 +241,7 @@ Directive này giúp bạn lấy toàn bộ nội dung của một khối để 
     opacity: 1
 ```
 
-```CSS
+```css
 @-webkit-keyframes fadeIn {
   0% {
     opacity: 0;
@@ -290,7 +290,7 @@ Directive này giúp bạn lấy toàn bộ nội dung của một khối để 
 
 ##### Nested properties
 
-```SASS
+```sass
 body
   font:
     family: Tahoma, verdana, sans-serif
@@ -302,7 +302,7 @@ body
     position: center top
 ```
 
-```CSS
+```css
 body {
   font-family: Tahoma, verdana, sans-serif;
   font-size: 12px;
@@ -315,7 +315,7 @@ body {
 
 Trên thực tế, trong trường hợp viết font và background như ví dụ trên là không cần thiết, vì bạn có thể gộp nó lại thành 1 property thôi là đủ. Nhưng mình vẫn viết để mọi người hiểu về nested properties thôi :D
 
-```SASS
+```sass
 body
   font: bold 12px tahoma, verdana, sans-serif
     background: url(path/to/image) no-repeat center top
@@ -323,7 +323,7 @@ body
 
 ##### Parent selector
 
-```SASS
+```sass
 a
   color: #FFF
   text-decoration: none
@@ -331,7 +331,7 @@ a
     text-decoration: underline
 ```
 
-```CSS
+```css
 a {
   color: #FFF;
   text-decoration: none;
@@ -343,7 +343,7 @@ a:hover {
 
 Hoặc:
 
-```SASS
+```sass
 .box
   border: 1px solid #000
   padding: 5px
@@ -355,7 +355,7 @@ Hoặc:
     box-shadow: 10px 10px 5px #888
 ```
 
-```CSS
+```css
 .box, .box-radius, .box-shadow {
   border: 1px solid #000;
   padding: 5px;

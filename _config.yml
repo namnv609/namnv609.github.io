@@ -2,6 +2,7 @@ name: NamNV609's Blog
 description: NamNV609's Blog
 baseurl: "/"
 url: "https://namnv609.cf"
+timezone: Asia/Ho_Chi_Minh
 
 plugins:
   - jekyll-feed
